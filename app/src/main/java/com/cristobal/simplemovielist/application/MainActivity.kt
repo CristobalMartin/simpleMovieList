@@ -6,7 +6,9 @@ import com.cristobal.simplemovielist.R
 import com.cristobal.simplemovielist.databinding.ActivityMainBinding
 import com.cristobal.simplemovielist.ui.movieList.MovieListFragment
 import com.cristobal.simplemovielist.ui.splash.SplashFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
 	private lateinit var binding: ActivityMainBinding

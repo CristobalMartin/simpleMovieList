@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Simple Movie List</string>
+    <string name="connection_error">Error de conexión. Revise su conexión e intente reconectar.</string>
+    <string name="reconnect">Reconectar</string>
 </resources>
