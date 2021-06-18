@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "710628106733",
+    "project_id": "simplemovielist",
+    "storage_bucket": "simplemovielist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710628106733:android:021dbffbfb4403cd0f47e4",
+        "android_client_info": {
+          "package_name": "com.cristobal.simplemovielist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710628106733-6aueg1ikflns5hi3b93q1hq6fohetm6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMXkdTVDUYQUfD0MCZ74rTN8cAvwWgnu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710628106733-6aueg1ikflns5hi3b93q1hq6fohetm6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
