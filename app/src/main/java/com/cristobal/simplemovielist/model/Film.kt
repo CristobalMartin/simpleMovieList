@@ -10,6 +10,6 @@ data class Film(
 	val release_date: String,
 	val original_title: String,
 	val overview: String,
-	val vote_Average: BigDecimal
+	val vote_average: String
 	)
 

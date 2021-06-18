@@ -9,4 +9,6 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="rate_bg">#fef569</color>
 </resources>
