@@ -3,4 +3,6 @@
     <string name="connection_error">Connection error. Check your connection and try to reconnect.</string>
     <string name="reload">Reload</string>
     <string name="original_title">Original title: %1$s</string>
+
+    <string name="filmListBarTitle">New films</string>
 </resources>

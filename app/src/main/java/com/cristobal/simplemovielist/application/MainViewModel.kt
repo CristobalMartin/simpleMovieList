@@ -19,6 +19,9 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 
 	private val IMAGE_START_URI = "https://image.tmdb.org/t/p/w500"
 
+	private val _appBarTitle = MutableStateFlow<String>("")
+	val appBarTitle = _appBarTitle.asStateFlow()
+
 	private val _films = MutableStateFlow<LoadState<List<Film>>>(LoadState.Unstarted)
 	val films = _films.asStateFlow()
 
@@ -54,5 +57,15 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 		viewModelScope.launch {
 			_newDetailFilm.value = film
 		}
+	}
+
+	fun resetDetailFilm() {
+		viewModelScope.launch {
+			_newDetailFilm.value = null
+		}
+	}
+
+	fun setActionBarTitle(title: String) {
+		_appBarTitle.value = title
 	}
 }

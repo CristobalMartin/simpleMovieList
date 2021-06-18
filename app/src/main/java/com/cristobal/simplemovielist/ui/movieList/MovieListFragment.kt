@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.cristobal.simplemovielist.R
 import com.cristobal.simplemovielist.application.MainViewModel
 import com.cristobal.simplemovielist.databinding.FragmentMovieListBinding
+import com.cristobal.simplemovielist.model.Film
 import com.cristobal.simplemovielist.repository.LoadState
 import kotlinx.coroutines.flow.collect
 
@@ -21,6 +23,8 @@ class MovieListFragment : Fragment() {
 	private val binding get() = _binding!!
 
 	private lateinit var movieListAdapter: MovieListAdapter
+
+	private var filmsList = listOf<Film>()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -35,9 +39,10 @@ class MovieListFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		movieListAdapter = MovieListAdapter(mutableListOf(), this@MovieListFragment.requireContext(), viewModel)
+		movieListAdapter = MovieListAdapter(filmsList, this@MovieListFragment.requireContext(), viewModel)
 
 		binding.recyclerView.adapter = movieListAdapter
+		viewModel.setActionBarTitle(getString(R.string.filmListBarTitle))
 	}
 
 	init {
@@ -46,7 +51,8 @@ class MovieListFragment : Fragment() {
 
 				// The only state available here
 				if (it is LoadState.Success) {
-					movieListAdapter.setItems(it.data)
+					filmsList = it.data
+					movieListAdapter.setItems(filmsList)
 				}
 			}
 		}

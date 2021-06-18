@@ -11,7 +11,7 @@ import com.cristobal.simplemovielist.application.MainViewModel
 import com.cristobal.simplemovielist.databinding.ItemFilmBinding
 import com.cristobal.simplemovielist.model.Film
 
-class MovieListAdapter(films: MutableList<Film>, private val context: Context, val viewModel: MainViewModel) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+class MovieListAdapter(films: List<Film>, private val context: Context, val viewModel: MainViewModel) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
     private var mItems: List<Film> = films
 

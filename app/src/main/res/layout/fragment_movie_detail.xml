@@ -1,20 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.splash.SplashFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MainFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:context=".ui.movieDetail.MovieDetailFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/bannerImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/posterImage"
+            android:layout_marginTop="140dp"
+            android:layout_width="150dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_error_black_48"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bannerImage"/>
+
+        <TextView
+            android:id="@+id/rateTextView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rate_bg"
+            android:textSize="@dimen/textNormal"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@id/posterImage"
+            app:layout_constraintStart_toStartOf="@id/posterImage"
+            app:layout_constraintTop_toBottomOf="@id/bannerImage" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/textTitles"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bannerImage"
+            app:layout_constraintEnd_toStartOf="@id/posterImage"/>
+
+        <TextView
+            android:id="@+id/originalTitleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="@dimen/textBig"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintEnd_toStartOf="@id/posterImage"/>
+
+        <TextView
+            android:id="@+id/overViewTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="@dimen/textNormal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintEnd_toStartOf="@id/posterImage"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
