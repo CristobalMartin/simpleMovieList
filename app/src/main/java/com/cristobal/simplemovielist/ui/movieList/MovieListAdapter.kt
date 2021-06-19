@@ -1,9 +1,10 @@
 package com.cristobal.simplemovielist.ui.movieList
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cristobal.simplemovielist.R
@@ -11,9 +12,7 @@ import com.cristobal.simplemovielist.application.MainViewModel
 import com.cristobal.simplemovielist.databinding.ItemFilmBinding
 import com.cristobal.simplemovielist.model.Film
 
-class MovieListAdapter(films: List<Film>, private val context: Context, val viewModel: MainViewModel) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
-
-    private var mItems: List<Film> = films
+class MovieListAdapter (private val context: Context, val viewModel: MainViewModel) :  PagingDataAdapter<Film, MovieListAdapter.ViewHolder>(FilmComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -22,14 +21,7 @@ class MovieListAdapter(films: List<Film>, private val context: Context, val view
     }
 
     override fun onBindViewHolder(holder: MovieListAdapter.ViewHolder, position: Int) {
-        holder.bind(mItems[position])
-    }
-
-    override fun getItemCount(): Int = mItems.size
-
-    fun setItems(newItems: List<Film>) {
-        mItems = newItems
-        notifyDataSetChanged()
+        getItem(position)?.let { holder.bind(it) }
     }
 
     inner class ViewHolder(private val itemBinding: ItemFilmBinding) : RecyclerView.ViewHolder(itemBinding.root) {
@@ -56,6 +48,13 @@ class MovieListAdapter(films: List<Film>, private val context: Context, val view
                 viewModel.openDetailFilm(item)
             }
         }
+    }
 
+    object FilmComparator : DiffUtil.ItemCallback<Film>() {
+        override fun areItemsTheSame(oldItem: Film, newItem: Film) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Film, newItem: Film) =
+            oldItem == newItem
     }
 }

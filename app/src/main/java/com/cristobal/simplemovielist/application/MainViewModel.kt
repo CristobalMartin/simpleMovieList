@@ -2,16 +2,13 @@ package com.cristobal.simplemovielist.application
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.*
 import com.cristobal.simplemovielist.model.Film
-import com.cristobal.simplemovielist.repository.LoadState
+import com.cristobal.simplemovielist.repository.FilmsPagingSource
 import com.cristobal.simplemovielist.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,31 +19,46 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 	private val _appBarTitle = MutableStateFlow<String>("")
 	val appBarTitle = _appBarTitle.asStateFlow()
 
-	private val _films = MutableStateFlow<LoadState<List<Film>>>(LoadState.Unstarted)
-	val films = _films.asStateFlow()
+	private val _goToMainList = MutableSharedFlow<Boolean>()
+	val goToMainList = _goToMainList.asSharedFlow()
+
+	private val _firstLoadError = MutableSharedFlow<Boolean>()
+	val firstLoadError = _firstLoadError.asSharedFlow()
+
 
 	// When there is a new film to be shown in detail, the event will trigger the navigation to the detail screen
 	private val _newDetailFilm = MutableStateFlow<Film?>(null)
 	val newDetailFilm = _newDetailFilm.asStateFlow()
 
-	// For pagination of the films query
-	var actualPage = 1
-
-	init {
-		loadFilms()
-	}
-
-	fun loadFilms() {
-		_films.value = LoadState.Loading
+	fun goToMainList() {
 		viewModelScope.launch {
-			try {
-				val deviceLanguage = Locale.getDefault().language
-				_films.value = LoadState.Success(repository.getDiscoverFilms(deviceLanguage, actualPage).results)
-			} catch (e: Exception) {
-				_films.value = LoadState.Error(e.toString())
-			}
+			_goToMainList.emit(true)
 		}
 	}
+
+	fun firstLoadError() {
+		viewModelScope.launch {
+			_firstLoadError.emit(true)
+		}
+	}
+
+	/*	fun loadFilms() {
+			_films.value = LoadState.Loading
+			viewModelScope.launch {
+				try {
+					val deviceLanguage = Locale.getDefault().language
+					_films.value = LoadState.Success(repository.getDiscoverFilms(deviceLanguage, actualPage).results)
+				} catch (e: Exception) {
+					_films.value = LoadState.Error(e.toString())
+				}
+			}
+		}*/
+
+	val films: Flow<PagingData<Film>> =
+		Pager(config = PagingConfig(pageSize = 20, prefetchDistance = 5),
+			  pagingSourceFactory = { FilmsPagingSource(repository.retrofitService) }
+			 ).flow.cachedIn(viewModelScope)
+
 
 	// Builds final uri for the image partial path
 	fun getImageFullUri(image: String): String {

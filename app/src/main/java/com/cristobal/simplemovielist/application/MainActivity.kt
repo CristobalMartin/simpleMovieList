@@ -2,6 +2,7 @@ package com.cristobal.simplemovielist.application
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -10,10 +11,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.paging.LoadState
 import com.cristobal.simplemovielist.R
 import com.cristobal.simplemovielist.databinding.ActivityMainBinding
+import com.cristobal.simplemovielist.ui.movieList.MovieListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
 	private lateinit var appBarConfiguration: AppBarConfiguration
 	private lateinit var navController: NavController
+
+	lateinit var movieListAdapter: MovieListAdapter
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +43,22 @@ class MainActivity : AppCompatActivity() {
 		appBarConfiguration = AppBarConfiguration(navController.graph)
 		setupActionBarWithNavController(navController, appBarConfiguration)
 
+		movieListAdapter = MovieListAdapter(this, viewModel)
+
+		// With paging 3, the listener of the state of the load is in the adapter
+		// So, the adapter is in the activity, so it is started as soon as the app is launched,
+		// and the splash activity can receive the state of the first load
+		movieListAdapter.addLoadStateListener { loadState ->
+
+			//In this situation, the first load is successfully
+			if (loadState.prepend.endOfPaginationReached) {
+				viewModel.goToMainList()
+			}
+
+			if (loadState.refresh is LoadState.Error) {
+				viewModel.firstLoadError()
+			}
+		}
 	}
 
 	override fun onSupportNavigateUp(): Boolean {
@@ -67,6 +89,12 @@ class MainActivity : AppCompatActivity() {
 		lifecycleScope.launchWhenStarted {
 			viewModel.appBarTitle.collect {
 				supportActionBar?.title = it
+			}
+		}
+
+		lifecycleScope.launchWhenStarted {
+			viewModel.films.collectLatest { pagingData ->
+				movieListAdapter.submitData(pagingData)
 			}
 		}
 	}

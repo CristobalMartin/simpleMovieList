@@ -10,10 +10,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.cristobal.simplemovielist.R
+import com.cristobal.simplemovielist.application.MainActivity
 import com.cristobal.simplemovielist.application.MainViewModel
 import com.cristobal.simplemovielist.databinding.FragmentSplashBinding
-import com.cristobal.simplemovielist.repository.LoadState
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 // This fragment is only showed at the start, while the first webservice call
 class SplashFragment : Fragment() {
@@ -33,28 +34,24 @@ class SplashFragment : Fragment() {
 		(activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 	}
 
-	init {
-		lifecycleScope.launchWhenStarted {
-			viewModel.films.collect {
-				when (it) {
-					is LoadState.Unstarted -> {}
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 
-					is LoadState.Error -> {
-						binding.connectionErrorLayout.visibility = View.VISIBLE
-						binding.reconnectButton.setOnClickListener {
-							viewModel.loadFilms()
-						}
-					}
-
-					is LoadState.Loading -> {
-						binding.connectionErrorLayout.visibility = View.INVISIBLE
-					}
-
-					is LoadState.Success -> {
-						val navController = NavHostFragment.findNavController(this@SplashFragment)
-						navController.navigate(R.id.action_splashFragment_to_movieListFragment)
-					}
-				}}
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel.goToMainList.collect {
+				val navController = NavHostFragment.findNavController(this@SplashFragment)
+				navController.navigate(R.id.action_splashFragment_to_movieListFragment)
 			}
 		}
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewModel.firstLoadError.collect {
+				binding.connectionErrorLayout.visibility = View.VISIBLE
+				binding.reconnectButton.setOnClickListener {
+					binding.connectionErrorLayout.visibility = View.INVISIBLE
+					(activity as MainActivity).movieListAdapter.retry()
+				}
+			}
+		}
+	}
 }
