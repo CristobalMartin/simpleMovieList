@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splash_text">50sp</dimen>
+
+    <dimen name="textTitles">20sp</dimen>
+    <dimen name="textBig">16sp</dimen>
+    <dimen name="textNormal">14sp</dimen>
+    <dimen name="textSmall">12sp</dimen>
+
+    <dimen name="mainImageListWidth">120dp</dimen>
+    <dimen name="rateListSize">50dp</dimen>
+    <dimen name="likeListSize">50dp</dimen>
+
+    <dimen name="rateDetailSize">80dp</dimen>
+    <dimen name="bannerDetailHeight">300dp</dimen>
+    <dimen name="posterDetailWidth">150dp</dimen>
+</resources>

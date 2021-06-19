@@ -11,4 +11,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="rate_bg">#fef569</color>
+    <color name="like">#f42020</color>
+
 </resources>

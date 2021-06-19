@@ -7,4 +7,13 @@
     <dimen name="textNormal">14sp</dimen>
     <dimen name="textSmall">12sp</dimen>
 
+    <!-- List fragment -->
+    <dimen name="mainImageListWidth">90dp</dimen>
+    <dimen name="rateListSize">40dp</dimen>
+    <dimen name="likeListSize">30dp</dimen>
+
+    <!-- Detail fragment -->
+    <dimen name="rateDetailSize">50dp</dimen>
+    <dimen name="bannerDetailHeight">200dp</dimen>
+    <dimen name="posterDetailWidth">100dp</dimen>
 </resources>
