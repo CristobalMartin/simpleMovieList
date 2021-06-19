@@ -17,9 +17,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+// Dependencies for retrofit and room
+
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
 
 	private val BASEURL = "https://api.themoviedb.org/3/"
 

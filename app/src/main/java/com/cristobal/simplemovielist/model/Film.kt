@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-// Whole data of one single film
+// Complete data of one single film
 // This very same model is used for Retrofit and Room
 @Entity
 data class Film(

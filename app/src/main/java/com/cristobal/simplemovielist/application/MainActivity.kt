@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
+// Uses the single activity architecture
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -45,8 +46,8 @@ class MainActivity : AppCompatActivity() {
 		movieListAdapter = MovieListAdapter(this, viewModel)
 
 		// With paging 3, the listener of the state of the load is in the adapter
-		// So, the adapter is in the activity, so it is started as soon as the app is launched,
-		// and the splash activity can receive the state of the first load
+		// We need the listener in two fragments, so the adapter is in the main activity, and therefore the webservice load starts as soon as the app is launched.
+		// The splash fragment receives the state of the first load, and the main list fragment uses the adapter as it is
 		movieListAdapter.addLoadStateListener { loadState ->
 
 			//In this situation, the first load is successfully
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 		return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 	}
 
-	// This is because the up button must behave like back button. If not, the splash screen restarts
+	// This is because the up button must behave like the back button. If not, the splash screen restarts
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		when (item.itemId) {
 			android.R.id.home -> {
@@ -76,6 +77,8 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	init {
+
+		// The next observers are for navigating among screens.
 		lifecycleScope.launchWhenStarted {
 			viewModel.newDetailFilmFromMainList.collect {
 				if (it) {
@@ -100,12 +103,14 @@ class MainActivity : AppCompatActivity() {
 			}
 		}
 
+		// Changes the app bar title
 		lifecycleScope.launchWhenStarted {
 			viewModel.appBarTitle.collect {
 				supportActionBar?.title = it
 			}
 		}
 
+		// Required for the paging library
 		lifecycleScope.launchWhenStarted {
 			viewModel.films.collectLatest { pagingData ->
 				movieListAdapter.submitData(pagingData)

@@ -51,6 +51,7 @@ class FavoritesListFragment : Fragment() {
 			}
 		}
 
+		// Reload the favorites list every time this fragment is created
 		viewLifecycleOwner.lifecycleScope.launch {
 			favoritesListAdapter.setItems(viewModel.getFavoriteFilms())
 		}

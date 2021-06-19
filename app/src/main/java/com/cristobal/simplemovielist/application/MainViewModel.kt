@@ -27,23 +27,24 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 	private val _favoriteFilmsAmount = MutableStateFlow(0)
 	val favoriteFilmsAmount = _favoriteFilmsAmount.asSharedFlow()
 
-	// Go from splash to main list
+	// Goes from splash to main list
 	private val _goToMainList = MutableSharedFlow<Boolean>()
 	val goToMainList = _goToMainList.asSharedFlow()
 
-	// Go from main list to favorites
+	// Goes from main list to favorites
 	private val _goToFavoritesList = MutableSharedFlow<Boolean>()
 	val goToFavoritesList = _goToFavoritesList.asSharedFlow()
 
-	// When there is a new film to be shown in detail, the event will trigger the navigation to the detail screen
-	// Can be done from main list and from favorites
-	// We need to different variables because it triggers two different navegation actions
+	// When there is a new film to be seen in detail, this event will trigger the navigation to the detail screen
+	// It can be accessed from main list and from favorites
+	// We need to distinguish from where it is been requested because it triggers two different navigation actions
 	private val _newDetailFilmFromMainList = MutableSharedFlow<Boolean>()
 	val newDetailFilmFromMainList = _newDetailFilmFromMainList.asSharedFlow()
 
 	private val _newDetailFilmFromFavorites = MutableSharedFlow<Boolean>()
 	val newDetailFilmFromFavorites = _newDetailFilmFromFavorites.asSharedFlow()
 
+	// And this is the data shown in the detail screen
 	private val _newDetailFilm = MutableStateFlow<Film?>(null)
 	val newDetailFilm = _newDetailFilm.asStateFlow()
 

@@ -16,7 +16,7 @@ import com.cristobal.simplemovielist.databinding.FragmentSplashBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// This fragment is only showed at the start, while the first webservice call
+// This fragment is only shown at the start, while it is waiting for the first webservice response
 class SplashFragment : Fragment() {
 
 	private val viewModel by activityViewModels<MainViewModel>()
@@ -45,6 +45,7 @@ class SplashFragment : Fragment() {
 			}
 		}
 
+		// But if there is an error, the user can retry requesting the webservice
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.firstLoadError.collect {
 				binding.connectionErrorLayout.visibility = View.VISIBLE

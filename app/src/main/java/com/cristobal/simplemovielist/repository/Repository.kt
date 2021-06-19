@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 const val PAGE_SIZE = 20
 
+// Repository for network and local management of data
 class Repository(private val retrofitService: RetrofitService, private val filmDao: FilmDao) {
 
 	fun getDiscoverFilms(): Flow<PagingData<Film>> = Pager(config = PagingConfig(pageSize = PAGE_SIZE, prefetchDistance = 5), pagingSourceFactory = { FilmsPagingSource(retrofitService) }).flow

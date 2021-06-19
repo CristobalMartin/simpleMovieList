@@ -33,7 +33,7 @@ class MovieDetailFragment : Fragment() {
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.newDetailFilm.collect {
 
-				// Here, newDetailFilm must be not null
+				// Here, newDetailFilm must not be null
 				if (it != null) {
 					showDetailedData(it)
 				}

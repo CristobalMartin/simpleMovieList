@@ -15,6 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
+// As the movie list adapter uses Paging but favorites does not, it is preferable to separate in two different classes
+// There are also some minor changes in how the data is used by the adapter
 class FavoritesListAdapter(films: MutableList<Film>, private val context: Context, val viewModel: MainViewModel) : RecyclerView.Adapter<FavoritesListAdapter.ViewHolder>() {
 
 	private var mItems: MutableList<Film> = films

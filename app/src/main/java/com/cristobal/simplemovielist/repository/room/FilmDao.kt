@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.cristobal.simplemovielist.model.Film
 
+// CRUD for films in local database
 @Dao
 interface FilmDao {
     @Query("SELECT * FROM Film ORDER BY release_date DESC")
