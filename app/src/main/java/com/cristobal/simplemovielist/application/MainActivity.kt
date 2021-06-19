@@ -1,7 +1,6 @@
 package com.cristobal.simplemovielist.application
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 	init {
 		lifecycleScope.launchWhenStarted {
 			viewModel.newDetailFilmFromMainList.collect {
-				if (it != null) {
+				if (it) {
 					navController.navigate(R.id.action_movieListFragment_to_movieDetailFragment)
 				}
 			}
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
 		lifecycleScope.launchWhenStarted {
 			viewModel.newDetailFilmFromFavorites.collect {
-				if (it != null) {
+				if (it) {
 					navController.navigate(R.id.action_favoritesListFragment_to_movieDetailFragment)
 				}
 			}

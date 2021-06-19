@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.cristobal.simplemovielist.model.Film
-import com.cristobal.simplemovielist.repository.FilmsPagingSource
 import com.cristobal.simplemovielist.repository.Repository
-import com.cristobal.simplemovielist.repository.room.FilmDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

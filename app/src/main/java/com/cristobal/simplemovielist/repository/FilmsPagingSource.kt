@@ -9,9 +9,7 @@ import java.util.*
 
 private const val START_INDEX = 1
 
-
 class FilmsPagingSource(private val service: RetrofitService) : PagingSource<Int, Film>() {
-
 
 	override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Film> {
 		val pageIndex = params.key ?: START_INDEX
@@ -51,6 +49,4 @@ class FilmsPagingSource(private val service: RetrofitService) : PagingSource<Int
 				?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
 		}
 	}
-
-
 }

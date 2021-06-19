@@ -37,6 +37,7 @@ class SplashFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		// When the first data is received, it goes to the main list
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.goToMainList.collect {
 				val navController = NavHostFragment.findNavController(this@SplashFragment)
