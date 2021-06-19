@@ -1,8 +1,8 @@
 package com.cristobal.simplemovielist.application
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -62,8 +62,7 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	override fun onSupportNavigateUp(): Boolean {
-		return navController.navigateUp(appBarConfiguration)
-				|| super.onSupportNavigateUp()
+		return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 	}
 
 	// This is because the up button must behave like back button. If not, the splash screen restarts
@@ -79,9 +78,25 @@ class MainActivity : AppCompatActivity() {
 
 	init {
 		lifecycleScope.launchWhenStarted {
-			viewModel.newDetailFilm.collect {
+			viewModel.newDetailFilmFromMainList.collect {
 				if (it != null) {
 					navController.navigate(R.id.action_movieListFragment_to_movieDetailFragment)
+				}
+			}
+		}
+
+		lifecycleScope.launchWhenStarted {
+			viewModel.newDetailFilmFromFavorites.collect {
+				if (it != null) {
+					navController.navigate(R.id.action_favoritesListFragment_to_movieDetailFragment)
+				}
+			}
+		}
+
+		lifecycleScope.launchWhenStarted {
+			viewModel.goToFavoritesList.collect {
+				if (it) {
+					navController.navigate(R.id.action_movieListFragment_to_favoritesListFragment)
 				}
 			}
 		}

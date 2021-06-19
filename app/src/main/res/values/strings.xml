@@ -5,4 +5,5 @@
     <string name="original_title">Original title: %1$s</string>
 
     <string name="filmListBarTitle">New films</string>
+    <string name="favoritesListBarTitle">My favourites</string>
 </resources>

@@ -30,6 +30,29 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/movieListFragment"/>
+        <action
+            android:id="@+id/action_movieListFragment_to_favoritesListFragment"
+            app:destination="@id/favoritesListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/movieListFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesListFragment"
+        android:name="com.cristobal.simplemovielist.ui.favoritesList.FavoritesListFragment"
+        android:label="FavoritesListFragment"
+        tools:layout="@layout/fragment_movie_list">
+        <action
+            android:id="@+id/action_favoritesListFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/favoritesListFragment"/>
     </fragment>
 
     <fragment

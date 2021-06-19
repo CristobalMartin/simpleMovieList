@@ -10,7 +10,7 @@
     <!-- List fragment -->
     <dimen name="mainImageListWidth">90dp</dimen>
     <dimen name="rateListSize">40dp</dimen>
-    <dimen name="likeListSize">30dp</dimen>
+    <dimen name="likeListSize">50dp</dimen>
 
     <!-- Detail fragment -->
     <dimen name="rateDetailSize">50dp</dimen>

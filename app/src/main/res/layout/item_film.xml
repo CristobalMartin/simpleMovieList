@@ -18,11 +18,13 @@
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:padding="10dp">
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp">
 
         <ImageView
             android:id="@+id/mainImage"
             android:layout_width="@dimen/mainImageListWidth"
+            android:layout_marginTop="10dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:textSize="@dimen/textNormal"
             android:maxLines="2"
@@ -78,6 +81,7 @@
             android:id="@id/rateTextView"
             android:layout_width="@dimen/rateListSize"
             android:layout_height="@dimen/rateListSize"
+            android:layout_marginRight="10dp"
             android:background="@drawable/rate_bg"
             android:textSize="@dimen/textNormal"
             android:textStyle="bold"
@@ -90,6 +94,7 @@
         <ImageView
             android:id="@+id/likeImageView"
             android:src="@drawable/outline_favorite_border_black_48"
+            android:padding="10dp"
             android:layout_width="@dimen/likeListSize"
             android:layout_height="@dimen/likeListSize"
             app:layout_constraintEnd_toEndOf="parent"

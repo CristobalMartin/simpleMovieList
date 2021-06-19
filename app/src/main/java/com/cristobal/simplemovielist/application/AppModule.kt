@@ -1,9 +1,11 @@
 package com.cristobal.simplemovielist.application
 
 import android.content.Context
+import androidx.room.Room
 import com.cristobal.simplemovielist.repository.Repository
 import com.cristobal.simplemovielist.repository.RetrofitService
-
+import com.cristobal.simplemovielist.repository.room.FilmDao
+import com.cristobal.simplemovielist.repository.room.RoomDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,25 +25,17 @@ class AppModule {
 
 	@Singleton
 	@Provides
-	fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
-			.apply {
+	fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
 				level = HttpLoggingInterceptor.Level.BODY
 			}
 
 	@Singleton
 	@Provides
-	fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
-		OkHttpClient.Builder()
-				.addInterceptor(httpLoggingInterceptor)
-				.build()
+	fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
 
 	@Singleton
 	@Provides
-	fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-			.addConverterFactory(GsonConverterFactory.create())
-			.baseUrl(BASEURL)
-			.client(okHttpClient)
-			.build()
+	fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(BASEURL).client(okHttpClient).build()
 
 	@Singleton
 	@Provides
@@ -49,5 +43,19 @@ class AppModule {
 
 	@Singleton
 	@Provides
-	fun providesRepository(retrofitService: RetrofitService) = Repository(retrofitService)
+	fun providesRepository(retrofitService: RetrofitService, filmDao: FilmDao) = Repository(retrofitService, filmDao)
+
+	@Provides
+	@Singleton
+	fun provideAppDatabase(@ApplicationContext appContext: Context): RoomDataBase {
+		return Room.databaseBuilder(
+			appContext,
+			RoomDataBase::class.java,
+			"filmsdb").build()
+	}
+
+	@Provides
+	fun providesFilmDao(roomDataBase: RoomDataBase): FilmDao {
+		return roomDataBase.filmDao()
+	}
 }

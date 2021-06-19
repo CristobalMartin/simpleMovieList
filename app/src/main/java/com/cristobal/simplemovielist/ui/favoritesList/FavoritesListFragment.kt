@@ -1,4 +1,4 @@
-package com.cristobal.simplemovielist.ui.movieList
+package com.cristobal.simplemovielist.ui.favoritesList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.cristobal.simplemovielist.R
-import com.cristobal.simplemovielist.application.MainActivity
 import com.cristobal.simplemovielist.application.MainViewModel
 import com.cristobal.simplemovielist.databinding.FragmentMovieListBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class MovieListFragment : Fragment() {
+class FavoritesListFragment : Fragment() {
 
 	private val viewModel by activityViewModels<MainViewModel>()
 
 	private var _binding: FragmentMovieListBinding? = null
 	private val binding get() = _binding!!
+
+	private lateinit var favoritesListAdapter: FavoritesListAdapter
+
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -35,21 +37,22 @@ class MovieListFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		binding.recyclerView.adapter = (activity as MainActivity).movieListAdapter  // little wierd, but an adapter can not be in the viewmodel
-		viewModel.setActionBarTitle(getString(R.string.filmListBarTitle))
+		favoritesListAdapter = FavoritesListAdapter(mutableListOf(), this@FavoritesListFragment.requireContext(), viewModel)
+
+		binding.recyclerView.adapter = favoritesListAdapter
+		viewModel.setActionBarTitle(getString(R.string.favoritesListBarTitle))
+		binding.favoritesActionButton.visibility = View.INVISIBLE
 
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewModel.favoriteFilmsAmount.collect {
-				if (it > 0) {
-					binding.favoritesActionButton.visibility = View.VISIBLE
-				} else {
-					binding.favoritesActionButton.visibility = View.INVISIBLE
+				if (it < 1) {
+					activity?.onBackPressed()
 				}
 			}
 		}
 
-		binding.favoritesActionButton.setOnClickListener {
-			viewModel.goToFavoritesList()
+		viewLifecycleOwner.lifecycleScope.launch {
+			favoritesListAdapter.setItems(viewModel.getFavoriteFilms())
 		}
 	}
 }
